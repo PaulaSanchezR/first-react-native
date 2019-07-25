@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, ScrollView,View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from './src/components/PlaceList/PlaceList'
 
@@ -22,33 +22,24 @@ export default class App extends Component{
        // update the state
           this.setState(prevState => {
             return {
-              places: prevState.places.concat(placeName)
+              places: prevState.places.concat({key: Math.random(),value: placeName})
             }
           })
     }
 
-    placeDeletedHandler = index => {
+    placeDeletedHandler = key => {
       // setState run Asincronit
       this.setState(prevState => {
         return{
-          // array that match the filter criteria
-          // return a new array with all the elements for the filter
-          // criteria 
-          places: prevState.places.filter( (place, i) => {
-            // return true of false
-            // true are the desire item on the array 
-            // false is not part of the new array
-            return i !== index;  // we return true
-              // we should return false for the id we get 
+            places: prevState.places.filter(place => {
+            return place.key !== key;  
           })
         }
       })
     }
  render() {
     return (
-      
-      <ScrollView>
-        <View style={styles.container}>
+          <View style={styles.container}>
             <Text style={styles.welcome}>El Cateo</Text>
             <Text style={styles.instructions}>Donde cada fruta es como un hijo para nosotros</Text>
             <PlaceInput onPlaceAdded = {this.placeAddedHandler}/>
@@ -56,8 +47,7 @@ export default class App extends Component{
              places={this.state.places} 
              onItemDeleted = {this.placeDeletedHandler}/>
          </View>    
-      </ScrollView>
-      
+        
     );
   }
 }
