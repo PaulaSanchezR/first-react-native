@@ -3,10 +3,12 @@ import {StyleSheet, Text, View} from 'react-native';
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from './src/components/PlaceList/PlaceList'
 import placeImage from './src/assest/avocado.jpeg'
+import PlaceDetail from './src/components/PlaceDetail/PlaceDetail'
 //type Props = {};<Props> 
 export default class App extends Component{
   state ={
-     places:[]
+     places:[],
+     selectedPlace: null
   }
 //method to handel change properti asign a error function
 // this will refer to the class
@@ -30,25 +32,35 @@ export default class App extends Component{
           })
     }
 
-    placeDeletedHandler = key => {
-      // setState run Asincronit
-      this.setState(prevState => {
-        return{
-            places: prevState.places.filter(place => {
-            return place.key !== key;  
+    placeSelectedHandler = key => {
+      this.setState(prevState =>{
+        return {
+          selectedPlace: prevState.places.find(place => {
+            return place.key === key
           })
-        }
+        };
       })
+      // setState run Asincronit
+      // this.setState(prevState => {
+      //   return{
+      //       places: prevState.places.filter(place => {
+      //       return place.key !== key;  
+      //     })
+      //   }
+      // })
     }
  render() {
     return (
           <View style={styles.container}>
             <Text style={styles.welcome}>El Cateo</Text>
             <Text style={styles.instructions}>Donde cada fruta es como un hijo para nosotros</Text>
+            {/* in order for placeDetail to show something in need to pass 
+            placeImage and placeName */}
+            <PlaceDetail selectedPlace={this.state.selectedPlace}/>
             <PlaceInput onPlaceAdded = {this.placeAddedHandler}/>
             <PlaceList 
              places={this.state.places} 
-             onItemDeleted = {this.placeDeletedHandler}/>
+             onItemSelected = {this.placeSelectedHandler}/>
          </View>    
         
     );
