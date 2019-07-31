@@ -56,7 +56,7 @@ export default class App extends Component{
             <Text style={styles.instructions}>Donde cada fruta es como un hijo para nosotros</Text>
             {/* in order for placeDetail to show something in need to pass 
             placeImage and placeName */}
-            <PlaceDetail selectedPlace={this.state.selectedPlace}/>
+            <PlaceDetail />
             <PlaceInput onPlaceAdded = {this.placeAddedHandler}/>
             <PlaceList 
              places={this.state.places} 
